@@ -424,35 +424,36 @@ const MessageCard = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =
 function App() {
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const [isCardOpen, setIsCardOpen] = useState(false);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(true);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [showStartOverlay, setShowStartOverlay] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize and auto-play audio from 8 seconds
+  // Initialize audio
   useEffect(() => {
     const audio = new Audio('/audio/Ilahi LoFi Mix DJ KEDROCK x SD Style(MumbaiRemix.Com).mp3');
     audio.loop = true;
     audio.volume = 0.5;
-    audio.currentTime = 8; // Start from 8 seconds
+    audio.currentTime = 8;
     audioRef.current = audio;
-
-    // Try to auto-play
-    const playAudio = async () => {
-      try {
-        await audio.play();
-        setIsAudioPlaying(true);
-      } catch (error) {
-        // Auto-play was prevented, user needs to interact first
-        setIsAudioPlaying(false);
-      }
-    };
-
-    playAudio();
 
     return () => {
       audio.pause();
       audio.src = '';
     };
   }, []);
+
+  // Handle start click - plays audio and hides overlay
+  const handleStart = async () => {
+    if (audioRef.current) {
+      try {
+        await audioRef.current.play();
+        setIsAudioPlaying(true);
+      } catch (error) {
+        console.log('Audio play failed');
+      }
+    }
+    setShowStartOverlay(false);
+  };
 
   // Toggle audio play/pause
   const toggleAudio = () => {
@@ -492,6 +493,52 @@ function App() {
   };
 
   const title = 'Happy Journey Buddy!';
+
+  // Start overlay - click to begin with music
+  if (showStartOverlay) {
+    return (
+      <motion.div
+        className="fixed inset-0 bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center cursor-pointer z-50"
+        onClick={handleStart}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        <div className="text-center">
+          <motion.div
+            className="text-8xl mb-8"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, 5, -5, 0]
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            🚂
+          </motion.div>
+          <motion.h1
+            className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-6"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            Happy Journey Buddy!
+          </motion.h1>
+          <motion.p
+            className="text-xl md:text-2xl text-amber-300 mb-8"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            🎵 Tap anywhere to start the journey 🎵
+          </motion.p>
+          <motion.div
+            className="text-6xl"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 1, repeat: Infinity }}
+          >
+            👆
+          </motion.div>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900">
