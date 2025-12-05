@@ -1,4 +1,4 @@
-# Happy Journey Monika 🚆✨
+# Happy Journey Buddy 🚆✨
 
 A beautiful single-page React + TypeScript web app with modern UI animations displaying a heartfelt "Happy Journey Monika" greeting with mountain scenery and train animation.
 
@@ -151,3 +151,4 @@ Replace `src/assets/train.json` with a different Lottie animation file.
 ---
 
 Made with 💜 by T
+
