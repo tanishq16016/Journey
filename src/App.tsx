@@ -23,7 +23,7 @@ const SparkleEmoji = ({ delay }: { delay: number }) => (
 const FloatingMessageButton = ({ onClick }: { onClick: () => void }) => (
   <motion.button
     onClick={onClick}
-    className="fixed bottom-6 right-6 z-50 px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-shadow"
+    className="fixed z-50 px-5 py-3 font-bold text-white transition-shadow rounded-full shadow-lg bottom-6 right-6 bg-gradient-to-r from-amber-500 to-orange-500 hover:shadow-xl"
     initial={{ scale: 0, opacity: 0 }}
     animate={{ 
       scale: 1, 
@@ -46,7 +46,7 @@ const FloatingMessageButton = ({ onClick }: { onClick: () => void }) => (
 const AudioButton = ({ isPlaying, onClick }: { isPlaying: boolean; onClick: () => void }) => (
   <motion.button
     onClick={onClick}
-    className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center"
+    className="fixed z-50 flex items-center justify-center font-bold text-white transition-shadow rounded-full shadow-lg bottom-6 left-6 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 hover:shadow-xl"
     initial={{ scale: 0, opacity: 0 }}
     animate={{ scale: 1, opacity: 1 }}
     transition={{ delay: 1, type: 'spring', stiffness: 260, damping: 20 }}
@@ -120,7 +120,7 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -157,7 +157,7 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
-                <div className="text-6xl md:text-8xl font-bold text-white drop-shadow-lg">
+                <div className="text-6xl font-bold text-white md:text-8xl drop-shadow-lg">
                   🎉 Correct! 🎉
                 </div>
               </motion.div>
@@ -165,13 +165,13 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
           )}
           
           <motion.div
-            className="fixed inset-0 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-gradient-to-br from-amber-400/95 to-orange-500/95 backdrop-blur-md rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl border border-amber-300/30 relative"
+              className="relative w-full max-w-md p-6 border shadow-2xl bg-gradient-to-br from-amber-400/95 to-orange-500/95 backdrop-blur-md rounded-2xl md:p-8 border-amber-300/30"
               initial={{ scale: 0.5, y: 50, opacity: 0 }}
               animate={{ 
                 scale: 1, 
@@ -185,7 +185,7 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
             >
               <button
                 onClick={handleClose}
-                className="absolute top-3 right-3 text-white/80 hover:text-white text-2xl font-bold"
+                className="absolute text-2xl font-bold top-3 right-3 text-white/80 hover:text-white"
               >
                 ×
               </button>
@@ -194,62 +194,62 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
                 {!isSolved && !showConfetti && (
                   <>
                     <motion.div
-                      className="text-5xl mb-4"
+                      className="mb-4 text-5xl"
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
                       🎂
                     </motion.div>
                     
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-3 drop-shadow-md">
+                    <h3 className="mb-3 text-xl font-bold text-white md:text-2xl drop-shadow-md">
                       Friendship Test! 💫
                     </h3>
                     
-                    <p className="text-white/95 text-lg mb-5">
+                    <p className="mb-5 text-lg text-white/95">
                       What's My Date of Birth? 🤔
                     </p>
                     
-                    <div className="flex gap-3 justify-center mb-4">
+                    <div className="flex justify-center gap-3 mb-4">
                       <div className="flex flex-col items-center">
-                        <label className="text-white/80 text-sm mb-1">Date</label>
+                        <label className="mb-1 text-sm text-white/80">Date</label>
                         <input
                           type="text"
                           value={date}
                           onChange={(e) => setDate(e.target.value)}
                           placeholder="DD"
                           maxLength={2}
-                          className="px-4 py-3 rounded-lg bg-white/20 text-white placeholder-white/50 border border-white/30 focus:outline-none focus:border-white text-center text-xl w-20"
+                          className="w-20 px-4 py-3 text-xl text-center text-white border rounded-lg bg-white/20 placeholder-white/50 border-white/30 focus:outline-none focus:border-white"
                         />
                       </div>
                       <div className="flex flex-col items-center">
-                        <label className="text-white/80 text-sm mb-1">Month</label>
+                        <label className="mb-1 text-sm text-white/80">Month</label>
                         <select
                           value={month}
                           onChange={(e) => setMonth(e.target.value)}
                           title="Select Month"
                           aria-label="Select Month"
-                          className="px-4 py-3 rounded-lg bg-white/20 text-white border border-white/30 focus:outline-none focus:border-white text-center text-lg w-32 cursor-pointer"
+                          className="w-32 px-4 py-3 text-lg text-center text-white border rounded-lg cursor-pointer bg-white/20 border-white/30 focus:outline-none focus:border-white"
                         >
-                          <option value="" className="bg-slate-800 text-white">Select</option>
-                          <option value="january" className="bg-slate-800 text-white">January</option>
-                          <option value="february" className="bg-slate-800 text-white">February</option>
-                          <option value="march" className="bg-slate-800 text-white">March</option>
-                          <option value="april" className="bg-slate-800 text-white">April</option>
-                          <option value="may" className="bg-slate-800 text-white">May</option>
-                          <option value="june" className="bg-slate-800 text-white">June</option>
-                          <option value="july" className="bg-slate-800 text-white">July</option>
-                          <option value="august" className="bg-slate-800 text-white">August</option>
-                          <option value="september" className="bg-slate-800 text-white">September</option>
-                          <option value="october" className="bg-slate-800 text-white">October</option>
-                          <option value="november" className="bg-slate-800 text-white">November</option>
-                          <option value="december" className="bg-slate-800 text-white">December</option>
+                          <option value="" className="text-white bg-slate-800">Select</option>
+                          <option value="january" className="text-white bg-slate-800">January</option>
+                          <option value="february" className="text-white bg-slate-800">February</option>
+                          <option value="march" className="text-white bg-slate-800">March</option>
+                          <option value="april" className="text-white bg-slate-800">April</option>
+                          <option value="may" className="text-white bg-slate-800">May</option>
+                          <option value="june" className="text-white bg-slate-800">June</option>
+                          <option value="july" className="text-white bg-slate-800">July</option>
+                          <option value="august" className="text-white bg-slate-800">August</option>
+                          <option value="september" className="text-white bg-slate-800">September</option>
+                          <option value="october" className="text-white bg-slate-800">October</option>
+                          <option value="november" className="text-white bg-slate-800">November</option>
+                          <option value="december" className="text-white bg-slate-800">December</option>
                         </select>
                       </div>
                     </div>
                     
                     {wrongMessage && (
                       <motion.p
-                        className="text-red-100 font-bold text-lg mb-4 bg-red-500/40 rounded-lg py-2 px-4"
+                        className="px-4 py-2 mb-4 text-lg font-bold text-red-100 rounded-lg bg-red-500/40"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                       >
@@ -259,16 +259,13 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
                     
                     <motion.button
                       onClick={handleSubmit}
-                      className="px-8 py-3 bg-white/30 hover:bg-white/40 text-white font-bold rounded-lg transition-colors text-lg"
+                      className="px-8 py-3 text-lg font-bold text-white transition-colors rounded-lg bg-white/30 hover:bg-white/40"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       Check Answer ✓
                     </motion.button>
-                    
-                    <p className="text-white/60 text-xs mt-4">
-                      💡 Hint: It's in the summer! ☀️
-                    </p>
+                
                   </>
                 )}
                 
@@ -279,25 +276,25 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   >
                     <motion.div
-                      className="text-5xl mb-4"
+                      className="mb-4 text-5xl"
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
                     >
                       🎒
                     </motion.div>
                     
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-4 drop-shadow-md">
+                    <h3 className="mb-4 text-xl font-bold text-white md:text-2xl drop-shadow-md">
                       🎉 You Know Me Well! 🎉
                     </h3>
                     
-                    <div className="bg-white/20 rounded-xl p-4 mb-4">
-                      <p className="text-white/95 text-lg md:text-xl font-medium leading-relaxed">
+                    <div className="p-4 mb-4 bg-white/20 rounded-xl">
+                      <p className="text-lg font-medium leading-relaxed text-white/95 md:text-xl">
                         "Yaar abki baar vo <span className="font-bold underline decoration-wavy decoration-white/50">biscuits</span> lana mat bhulna! 🍪"
                       </p>
                     </div>
                     
                     <motion.div
-                      className="text-3xl mb-4"
+                      className="mb-4 text-3xl"
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     >
@@ -309,7 +306,7 @@ const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClo
                         handleClose();
                         onOpenLetter();
                       }}
-                      className="px-6 py-3 bg-white/30 hover:bg-white/50 text-white font-bold rounded-lg transition-colors text-base border-2 border-white/50"
+                      className="px-6 py-3 text-base font-bold text-white transition-colors border-2 rounded-lg bg-white/30 hover:bg-white/50 border-white/50"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -383,7 +380,7 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -391,7 +388,7 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
           />
           
           <motion.div
-            className="fixed inset-0 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -406,7 +403,7 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
             >
               {/* Old school letter paper */}
               <div 
-                className="bg-amber-50 rounded-sm shadow-2xl p-6 border-4 border-amber-200"
+                className="p-6 border-4 rounded-sm shadow-2xl bg-amber-50 border-amber-200"
                 style={{
                   backgroundImage: `repeating-linear-gradient(transparent, transparent 27px, #e5d5c0 28px)`,
                   boxShadow: '5px 5px 15px rgba(0,0,0,0.3), inset 0 0 50px rgba(139,119,101,0.1)',
@@ -417,25 +414,25 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 
                 <button
                   onClick={handleClose}
-                  className="absolute top-2 right-2 text-amber-600/70 hover:text-amber-800 text-xl font-bold"
+                  className="absolute text-xl font-bold top-2 right-2 text-amber-600/70 hover:text-amber-800"
                 >
                   ×
                 </button>
 
                 {!isSent ? (
                   <>
-                    <div className="text-center mb-4">
-                      <h3 className="text-xl font-serif font-bold text-amber-800 mb-1">
+                    <div className="mb-4 text-center">
+                      <h3 className="mb-1 font-serif text-xl font-bold text-amber-800">
                         ✉️ Write to Tanishq
                       </h3>
-                      <p className="text-amber-600 text-sm">Your message means a lot! 💙</p>
+                      <p className="text-sm text-amber-600">Your message means a lot! 💙</p>
                     </div>
 
                     <textarea
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Write your message here..."
-                      className="w-full h-40 bg-transparent text-amber-900 placeholder-amber-400 resize-none focus:outline-none font-serif text-base leading-7 pl-4"
+                      className="w-full h-40 pl-4 font-serif text-base leading-7 bg-transparent resize-none text-amber-900 placeholder-amber-400 focus:outline-none"
                       style={{ lineHeight: '28px' }}
                     />
 
@@ -455,19 +452,19 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   </>
                 ) : (
                   <motion.div
-                    className="text-center py-8"
+                    className="py-8 text-center"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                   >
                     <motion.div
-                      className="text-6xl mb-4"
+                      className="mb-4 text-6xl"
                       animate={{ y: [0, -20, 0] }}
                       transition={{ duration: 0.5 }}
                     >
                       💌
                     </motion.div>
-                    <p className="text-amber-800 font-serif text-xl font-bold">Letter Sent!</p>
-                    <p className="text-amber-600 text-sm mt-1">Thank you! 💙</p>
+                    <p className="font-serif text-xl font-bold text-amber-800">Letter Sent!</p>
+                    <p className="mt-1 text-sm text-amber-600">Thank you! 💙</p>
                   </motion.div>
                 )}
               </div>
@@ -483,7 +480,7 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
 const ShowMessageButton = ({ onClick }: { onClick: () => void }) => (
   <motion.button
     onClick={onClick}
-    className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-cyan-500/30 transition-all"
+    className="px-8 py-4 text-lg font-bold text-white transition-all shadow-lg bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl hover:shadow-cyan-500/30"
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 1.5 }}
@@ -500,7 +497,7 @@ const MessageCard = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =
     {isVisible && (
       <>
         <motion.div
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -508,13 +505,13 @@ const MessageCard = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =
         />
         
         <motion.div
-          className="fixed inset-0 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative bg-slate-800/95 backdrop-blur-md rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl border border-cyan-400/30"
+            className="relative w-full max-w-lg p-6 border shadow-2xl bg-slate-800/95 backdrop-blur-md rounded-2xl md:p-8 border-cyan-400/30"
             initial={{ scale: 0.5, y: 100, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.5, y: 100, opacity: 0 }}
@@ -523,27 +520,27 @@ const MessageCard = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =
           >
             <button
               onClick={onClose}
-              className="absolute top-3 right-3 text-white/60 hover:text-white text-2xl font-bold transition-colors"
+              className="absolute text-2xl font-bold transition-colors top-3 right-3 text-white/60 hover:text-white"
             >
               ×
             </button>
 
             <div className="text-center">
               <motion.div
-                className="text-5xl mb-4"
+                className="mb-4 text-5xl"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 🚂
               </motion.div>
               
-              <h3 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-6">
+              <h3 className="mb-6 text-2xl font-bold text-transparent md:text-3xl bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
                 From Tanishq 💙
               </h3>
               
               <div className="space-y-4 text-gray-200">
                 <motion.p
-                  className="text-lg md:text-xl leading-relaxed"
+                  className="text-lg leading-relaxed md:text-xl"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
@@ -552,7 +549,7 @@ const MessageCard = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =
                 </motion.p>
                 
                 <motion.p
-                  className="text-base md:text-lg leading-relaxed text-gray-300"
+                  className="text-base leading-relaxed text-gray-300 md:text-lg"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
@@ -561,22 +558,23 @@ const MessageCard = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =
                 </motion.p>
                 
                 <motion.p
-                  className="text-base md:text-lg leading-relaxed text-gray-300"
+                  className="text-base leading-relaxed text-gray-300 md:text-lg"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 }}
                 >
-                  Take care and have the best time. See you soon with all the stories! 🎒
+                  Take care and have the best time. See you soon with all the stories! 🎒 <br />
+                  And haan… say hello to your whole family from my side too — hope everyone’s doing well! 😊🙏
                 </motion.p>
               </div>
 
               <motion.div
-                className="mt-6 pt-4 border-t border-cyan-500/30"
+                className="pt-4 mt-6 border-t border-cyan-500/30"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9 }}
               >
-                <p className="text-cyan-400 font-semibold">— Your friend, Tanishq 🤘</p>
+                <p className="font-semibold text-cyan-400">— Your friend, Tanishq 🤘</p>
               </motion.div>
             </div>
           </motion.div>
@@ -664,14 +662,14 @@ function App() {
   if (showStartOverlay) {
     return (
       <motion.div
-        className="fixed inset-0 bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center cursor-pointer z-50"
+        className="fixed inset-0 z-50 flex items-center justify-center cursor-pointer bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900"
         onClick={handleStart}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
         <div className="text-center">
           <motion.div
-            className="text-8xl mb-8"
+            className="mb-8 text-8xl"
             animate={{ 
               scale: [1, 1.2, 1],
               rotate: [0, 5, -5, 0]
@@ -681,14 +679,14 @@ function App() {
             🚂
           </motion.div>
           <motion.h1
-            className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-6"
+            className="mb-6 text-3xl font-bold text-transparent md:text-5xl bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500"
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             Happy Journey Buddy!
           </motion.h1>
           <motion.p
-            className="text-xl md:text-2xl text-amber-300 mb-8"
+            className="mb-8 text-xl md:text-2xl text-amber-300"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
@@ -712,7 +710,7 @@ function App() {
 
       <div className="relative z-10 flex flex-col items-center justify-start min-h-screen px-4 pt-16 md:pt-24">
         <motion.div
-          className="text-center mb-8"
+          className="mb-8 text-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -722,7 +720,7 @@ function App() {
             <SparkleEmoji delay={0.3} />
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+          <h1 className="mb-4 text-4xl font-bold md:text-6xl lg:text-7xl">
             {title.split('').map((char, index) => (
               <motion.span
                 key={index}
@@ -744,7 +742,7 @@ function App() {
         </motion.div>
 
         <motion.p
-          className="text-xl md:text-2xl text-amber-300 font-medium mb-8 text-center max-w-2xl drop-shadow-lg"
+          className="max-w-2xl mb-8 text-xl font-medium text-center md:text-2xl text-amber-300 drop-shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
