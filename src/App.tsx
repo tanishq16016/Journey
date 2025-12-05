@@ -345,8 +345,7 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          access_key: '4a5c94f3-8c77-4b8c-9a5e-1234567890ab', // Demo key
-          to: 'tanishq.chaturvedi03@gmail.com',
+          access_key: '8db05584-1482-4418-beae-37e2b360961c',
           subject: '💌 New Message from Journey Buddy!',
           message: `Someone sent you a message from Happy Journey Buddy:\n\n"${message}"`,
           from_name: 'Journey Buddy App',
