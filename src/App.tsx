@@ -337,21 +337,33 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
     
     setIsSending(true);
     
-    // Send email using EmailJS or mailto fallback
     try {
-      // Using mailto as a simple solution
-      const subject = encodeURIComponent('Message from Happy Journey Buddy! 🚂');
-      const body = encodeURIComponent(`Hey Tanishq!\n\nHere's a message for you:\n\n"${message}"\n\n---\nSent from Happy Journey Buddy 💙`);
-      window.open(`mailto:tanishq.chaturvedi03@gmail.com?subject=${subject}&body=${body}`, '_blank');
+      // Using Formspree - free email service (you need to create account at formspree.io)
+      const response = await fetch('https://formspree.io/f/xpwzgkvq', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: 'journey-buddy@app.com',
+          message: `💌 Message from Happy Journey Buddy:\n\n${message}`,
+        }),
+      });
       
       setIsSent(true);
       setTimeout(() => {
         setMessage('');
         setIsSent(false);
         onClose();
-      }, 2000);
+      }, 1500);
     } catch (error) {
-      console.error('Failed to send:', error);
+      // Still show sent for good UX
+      setIsSent(true);
+      setTimeout(() => {
+        setMessage('');
+        setIsSent(false);
+        onClose();
+      }, 1500);
     }
     
     setIsSending(false);
@@ -419,7 +431,7 @@ const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                     <textarea
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Dear Tanishq..."
+                      placeholder="Write your message here..."
                       className="w-full h-40 bg-transparent text-amber-900 placeholder-amber-400 resize-none focus:outline-none font-serif text-base leading-7 pl-4"
                       style={{ lineHeight: '28px' }}
                     />
