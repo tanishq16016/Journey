@@ -77,7 +77,7 @@ const generateConfetti = () => {
 };
 
 // Puzzle popup with secret message
-const PuzzlePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const PuzzlePopup = ({ isOpen, onClose, onOpenLetter }: { isOpen: boolean; onClose: () => void; onOpenLetter: () => void }) => {
   const [date, setDate] = useState('');
   const [month, setMonth] = useState('');
   const [isSolved, setIsSolved] = useState(false);
@@ -297,12 +297,162 @@ const PuzzlePopup = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                     </div>
                     
                     <motion.div
-                      className="text-3xl"
+                      className="text-3xl mb-4"
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 1, repeat: Infinity }}
                     >
                       🤝
                     </motion.div>
+
+                    <motion.button
+                      onClick={() => {
+                        handleClose();
+                        onOpenLetter();
+                      }}
+                      className="px-6 py-3 bg-white/30 hover:bg-white/50 text-white font-bold rounded-lg transition-colors text-base border-2 border-white/50"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      ✉️ Any message for me?
+                    </motion.button>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// Old school letter modal
+const LetterModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [message, setMessage] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  const handleSend = async () => {
+    if (!message.trim()) return;
+    
+    setIsSending(true);
+    
+    // Send email using EmailJS or mailto fallback
+    try {
+      // Using mailto as a simple solution
+      const subject = encodeURIComponent('Message from Happy Journey Buddy! 🚂');
+      const body = encodeURIComponent(`Hey Tanishq!\n\nHere's a message for you:\n\n"${message}"\n\n---\nSent from Happy Journey Buddy 💙`);
+      window.open(`mailto:tanishq.chaturvedi03@gmail.com?subject=${subject}&body=${body}`, '_blank');
+      
+      setIsSent(true);
+      setTimeout(() => {
+        setMessage('');
+        setIsSent(false);
+        onClose();
+      }, 2000);
+    } catch (error) {
+      console.error('Failed to send:', error);
+    }
+    
+    setIsSending(false);
+  };
+
+  const handleClose = () => {
+    setMessage('');
+    setIsSent(false);
+    onClose();
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleClose}
+          />
+          
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="relative w-full max-w-sm"
+              initial={{ scale: 0.5, y: 50, rotateX: -15, opacity: 0 }}
+              animate={{ scale: 1, y: 0, rotateX: 0, opacity: 1 }}
+              exit={{ scale: 0.5, y: 50, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Old school letter paper */}
+              <div 
+                className="bg-amber-50 rounded-sm shadow-2xl p-6 border-4 border-amber-200"
+                style={{
+                  backgroundImage: `repeating-linear-gradient(transparent, transparent 27px, #e5d5c0 28px)`,
+                  boxShadow: '5px 5px 15px rgba(0,0,0,0.3), inset 0 0 50px rgba(139,119,101,0.1)',
+                }}
+              >
+                {/* Red margin line */}
+                <div className="absolute left-10 top-0 bottom-0 w-0.5 bg-red-300/50" />
+                
+                <button
+                  onClick={handleClose}
+                  className="absolute top-2 right-2 text-amber-600/70 hover:text-amber-800 text-xl font-bold"
+                >
+                  ×
+                </button>
+
+                {!isSent ? (
+                  <>
+                    <div className="text-center mb-4">
+                      <h3 className="text-xl font-serif font-bold text-amber-800 mb-1">
+                        ✉️ Write to Tanishq
+                      </h3>
+                      <p className="text-amber-600 text-sm">Your message means a lot! 💙</p>
+                    </div>
+
+                    <textarea
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Dear Tanishq..."
+                      className="w-full h-40 bg-transparent text-amber-900 placeholder-amber-400 resize-none focus:outline-none font-serif text-base leading-7 pl-4"
+                      style={{ lineHeight: '28px' }}
+                    />
+
+                    <motion.button
+                      onClick={handleSend}
+                      disabled={!message.trim() || isSending}
+                      className={`w-full py-3 mt-2 font-bold rounded-lg transition-colors ${
+                        message.trim() 
+                          ? 'bg-amber-600 hover:bg-amber-700 text-white' 
+                          : 'bg-amber-300 text-amber-500 cursor-not-allowed'
+                      }`}
+                      whileHover={message.trim() ? { scale: 1.02 } : {}}
+                      whileTap={message.trim() ? { scale: 0.98 } : {}}
+                    >
+                      {isSending ? '📤 Sending...' : '📬 Send Letter'}
+                    </motion.button>
+                  </>
+                ) : (
+                  <motion.div
+                    className="text-center py-8"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                  >
+                    <motion.div
+                      className="text-6xl mb-4"
+                      animate={{ y: [0, -20, 0] }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      💌
+                    </motion.div>
+                    <p className="text-amber-800 font-serif text-xl font-bold">Letter Sent!</p>
+                    <p className="text-amber-600 text-sm mt-1">Thank you! 💙</p>
                   </motion.div>
                 )}
               </div>
@@ -424,6 +574,7 @@ const MessageCard = ({ isVisible, onClose }: { isVisible: boolean; onClose: () =
 function App() {
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const [isCardOpen, setIsCardOpen] = useState(false);
+  const [isLetterOpen, setIsLetterOpen] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [showStartOverlay, setShowStartOverlay] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -596,11 +747,17 @@ function App() {
       <PuzzlePopup
         isOpen={isMessageOpen}
         onClose={() => setIsMessageOpen(false)}
+        onOpenLetter={() => setIsLetterOpen(true)}
       />
 
       <MessageCard
         isVisible={isCardOpen}
         onClose={() => setIsCardOpen(false)}
+      />
+
+      <LetterModal
+        isOpen={isLetterOpen}
+        onClose={() => setIsLetterOpen(false)}
       />
     </div>
   );
